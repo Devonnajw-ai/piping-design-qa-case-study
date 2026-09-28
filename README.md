@@ -24,12 +24,11 @@ These requirements are defined for this exercise:
 - REQ-04: Saving and reopening a design preserves the route geometry, diameter, and connections.
 - REQ-05: Canceling an edit restores the route to its state before the edit began.
 
-## Planned QA Deliverables
+## QA Deliverables
 
-- Test cases linked to the proposed requirements
-- A simulated bug report with reproduction steps and expected versus actual behavior
-- A regression checklist covering the affected workflow
-
+- [Test cases](test-cases.md)
+- [Simulated bug report](bug-report.md)
+- [Regression checklist](regression-checklist.md)
 ## Testing Approach
 
 Use positive, negative, boundary-value, and state-transition scenarios. Prioritize connection integrity, input validation, and saved-data accuracy.

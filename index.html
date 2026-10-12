@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Piping QA Lab · Devonna Williams</title>
+<style>
+:root{color-scheme:dark;--bg:#0c1420;--panel:#142132;--line:#2b3d51;--muted:#adbed0;--cyan:#64e1db;--gold:#f1bf6a}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#eef5fc;font:15px/1.5 system-ui,sans-serif}header{padding:22px 28px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px}h1{font-size:25px;margin:2px 0}h2{font-size:16px;margin:0 0 14px}.eyebrow{font-size:11px;letter-spacing:2px;color:var(--cyan);font-weight:700}.sub,small{color:var(--muted)}.tag{border:1px solid #56604d;border-radius:30px;padding:6px 12px;color:var(--gold);font-size:12px;white-space:nowrap}main{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;padding:20px 28px}.scene,.panel{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}.scene{position:relative;background:#0d1927}.scene-head{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;font-size:13px}.scene canvas{display:block;width:100%;height:480px;touch-action:none;cursor:grab}.scene canvas:active{cursor:grabbing}.viewbar{padding:10px 16px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;border-top:1px solid var(--line)}.viewbar small{margin-right:auto}.panel{padding:18px;margin-bottom:14px}.step{font-size:11px;color:var(--cyan);letter-spacing:1px;margin:0 0 7px}.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}button,input,select{font:inherit}button{border:1px solid #405872;background:#20354b;color:#f2f7fc;padding:9px 12px;border-radius:7px;cursor:pointer}button:hover:not(:disabled){background:#31516e}button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}button:disabled{opacity:.38;cursor:not-allowed}.primary{background:var(--cyan);color:#082527;border-color:var(--cyan);font-weight:700}.primary:hover:not(:disabled){background:#a0f2ed}.wide{width:100%}label{display:block;color:var(--muted);font-size:13px;margin:12px 0 5px}input[type=text]{width:100%;background:#0c1726;border:1px solid #52708c;padding:10px;color:white;border-radius:7px}input[type=range]{width:100%;accent-color:var(--cyan)}input[type=checkbox]{accent-color:var(--gold)}.bug{border-color:#66553c}.bug label{color:#f3cf8d;display:flex;align-items:center;gap:8px;font-size:14px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.metric{background:var(--panel);border:1px solid var(--line);padding:14px;border-radius:10px}.metric small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:1px}.metric strong{font-size:17px;display:block;margin-top:5px}.message{margin-top:14px;border-left:3px solid var(--cyan);padding:12px 15px;background:#152c37;min-height:48px}.error{color:#ffd2c7;min-height:22px;font-size:13px}.lower{padding:0 28px 25px;display:grid;grid-template-columns:1.3fr 1fr;gap:18px}details{margin-top:8px;border-top:1px solid var(--line);padding-top:8px}summary{cursor:pointer;color:#dceaf5;font-size:14px}details p{color:var(--muted);font-size:13px}ol{padding-left:21px}#events{max-height:235px;overflow:auto;color:var(--muted);font:12px/1.8 ui-monospace,monospace;padding-left:20px}footer{padding:0 28px 25px;color:var(--muted);font-size:12px}a{color:var(--cyan)}@media(max-width:900px){main,.lower{grid-template-columns:1fr}aside{display:grid;grid-template-columns:1fr 1fr;gap:12px}.panel{margin:0}.scene canvas{height:390px}}@media(max-width:560px){header,main,.lower{padding:16px}header{align-items:flex-start;flex-direction:column;gap:8px}aside{display:block}aside .panel{margin-bottom:12px}.metrics{grid-template-columns:1fr 1fr}.scene canvas{height:340px}h1{font-size:22px}}
+</style>
+</head>
+<body>
+<header><div><div class="eyebrow">DEVONNA WILLIAMS / QA PORTFOLIO</div><h1>Piping QA Lab</h1><div class="sub">Create. Edit. Inspect. Regress.</div></div><span class="tag">Independent demo · v1.0</span></header>
+<main><section>
+<div class="scene"><div class="scene-head"><span>01 / DESIGN VIEWPORT</span><span id="phase">Open design · no route</span></div><canvas id="scene" aria-label="Rotatable 3D model of equipment A and B with a pipe route. Connection states are provided below." tabindex="0"></canvas><div class="viewbar"><small>Drag to orbit · scroll to zoom · arrow keys to rotate</small><button id="zoomOut" aria-label="Zoom out">−</button><button id="zoomIn" aria-label="Zoom in">+</button><button id="home">Reset view</button></div></div>
+<div class="metrics"><div class="metric"><small>Endpoint A</small><strong id="aStatus">—</strong></div><div class="metric"><small>Endpoint B</small><strong id="bStatus">—</strong></div><div class="metric"><small>Diameter</small><strong id="diamStatus">—</strong></div><div class="metric"><small>Middle offset</small><strong id="offsetStatus">—</strong></div></div>
+<div id="message" class="message" role="status" aria-live="polite">Start at connection A to create your first route.</div>
+</section><aside>
+<div class="panel"><p class="step">TC-01 / ROUTE CREATION</p><h2>Connect equipment</h2><div class="row"><button id="start">1. Start at A</button><button id="end">2. Select B</button></div><button id="confirm" class="primary wide">3. Confirm route</button><div class="row"><button id="selectRoute" class="wide">Select pipe route</button></div></div>
+<div class="panel"><p class="step">TC-02, 03, 04, 06 / PROPERTIES</p><h2>Route properties</h2><small id="selection">Select a route to change its diameter.</small><label for="diameter">Pipe diameter (mm)</label><input id="diameter" type="text" value="100" autocomplete="off" spellcheck="false" aria-describedby="validation"><div id="validation" class="error" role="alert"></div><button id="saveDiameter" class="wide">Save diameter</button><div class="row"><button id="edit" class="wide">Enter edit mode</button></div><label for="offset">Middle segment offset: <span id="offsetLabel">1.5</span> m</label><input id="offset" type="range" min="0.5" max="3" step="0.1" value="1.5"><div class="row"><button id="apply" class="primary">Save edit</button><button id="cancel">Cancel edit</button></div></div>
+<div class="panel bug"><p class="step">BUG-01 / DELIBERATE DEFECT</p><label><input id="bug" type="checkbox">Enable bug simulation</label><small>When a moved middle segment is saved, endpoint B disconnects. Switch off and start a new route for a clean regression run.</small></div>
+<div class="panel"><p class="step">TC-05 / PERSISTENCE</p><h2>Design file</h2><div class="row"><button id="saveDesign">Save design</button><button id="closeDesign">Close design</button><button id="reopen">Reopen saved</button><button id="newDesign">New design</button></div><small>One saved design in this browser. New design keeps the saved copy; Save design replaces it. Apply or cancel edits before closing.</small></div>
+</aside></main>
+<div class="lower"><section class="panel"><p class="step">TEST GUIDE / NO AUTOMATIC PASS CLAIMS</p><h2>Run your portfolio scenarios</h2>
+<details open><summary>TC-01 · Create a route</summary><p>Start at A → Select B → Confirm route. Inspect both connection indicators and the model. Both endpoints should be connected.</p></details>
+<details><summary>TC-02 & TC-03 · Validate diameter</summary><p>Select pipe route. Save 100 mm. Then try blank, 0, −25 (type -25), and abc separately. Each invalid value should show an error, and the committed diameter should stay 100 mm.</p></details>
+<details><summary>TC-04 · Edit without disconnecting</summary><p>Save design. Select pipe route → Enter edit mode. Move the middle segment slider → Save edit. With bug simulation off, A and B should remain connected. With it on, B should disconnect.</p></details>
+<details><summary>TC-05 · Save and reopen</summary><p>Use a connected, edited route at 100 mm. Save design → Close design → Reopen saved. Compare the geometry, offset, diameter, and both endpoints.</p></details>
+<details><summary>TC-06 · Cancel an edit</summary><p>Start with a saved, connected route at 100 mm. Enter edit mode, move the slider, type 150 in the diameter field, then Cancel edit. Original geometry, 100 mm diameter, and both connections should be restored.</p></details>
+</section><section class="panel"><p class="step">SESSION OBSERVATIONS</p><h2>Action log</h2><small>Actions and state changes, not test verdicts. Record your observed results and screenshots separately.</small><ol id="events"></ol></section></div>
+<footer>Forte 3D–inspired portfolio exercise with fictional requirements. Not Octave software or an engineering design tool. BUG-01 is intentionally implemented here; it is not a reported Forte 3D defect. <a href="https://github.com/Devonnajw-ai/piping-design-qa-case-study">View QA documentation</a></footer>
+<script>
+'use strict';
+const $=id=>document.getElementById(id), KEY='devonna-piping-qa-v1';
+let opened=true, route=null, draft=null, selected=false, creation=0, savedAvailable=false;
+let yaw=-0.5,pitch=0.6,zoom=1,drag=null;
+const clone=x=>JSON.parse(JSON.stringify(x));
+try{savedAvailable=!!localStorage.getItem(KEY)}catch{}
+function log(s){const li=document.createElement('li');li.textContent=new Date().toLocaleTimeString()+' · '+s;$('events').prepend(li);while($('events').children.length>40)$('events').lastChild.remove();}
+function say(s){$('message').textContent=s;log(s);}
+function props(){if(route){$('diameter').value=String((draft||route).diameter);$('offset').value=(draft||route).offset;}else{$('diameter').value='100';$('offset').value='1.5';}$('offsetLabel').textContent=Number($('offset').value).toFixed(1);$('validation').textContent='';}
+function sync(){
+const r=opened?(draft||route):null;
+$('start').disabled=!opened||!!route||creation>0;$('end').disabled=creation!==1;$('confirm').disabled=creation!==2;
+$('selectRoute').disabled=!opened||!route||!!draft||selected;
+$('diameter').disabled=!opened||!route||!selected;
+$('saveDiameter').disabled=!opened||!selected||!!draft;
+$('edit').disabled=!opened||!route||!selected||!!draft;
+$('offset').disabled=!draft;$('apply').disabled=!draft;$('cancel').disabled=!draft;
+$('saveDesign').disabled=!opened||!route||!!draft;
+$('closeDesign').disabled=!opened||!!draft||creation>0;
+$('reopen').disabled=opened||!savedAvailable;
+$('newDesign').disabled=!!draft;$('bug').disabled=!!draft;
+$('selection').textContent=draft?'Editing draft · Save edit or Cancel edit.':selected?'Pipe route selected.':'Select a route to change its diameter.';
+$('phase').textContent=!opened?'Design closed':draft?'Editing draft':route?'Open design · '+(selected?'route selected':'route ready'):creation?'Route creation in progress':'Open design · no route';
+$('aStatus').textContent=r?'Connected':'—';$('bStatus').textContent=r?(r.b?'Connected':'DISCONNECTED'):'—';$('bStatus').style.color=r&&!r.b?'#ff987f':'#eef5fc';
+$('diamStatus').textContent=r?r.diameter+' mm':'—';$('offsetStatus').textContent=r?r.offset.toFixed(1)+' m':'—';draw();}
+function diameter(){const raw=$('diameter').value.trim(),n=Number(raw);if(!raw||!/^\+?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?$/i.test(raw)||!Number.isFinite(n)||n<=0){$('validation').textContent='Enter a positive number greater than 0 mm.';say('Diameter rejected. Committed diameter remains '+route.diameter+' mm.');return null;}$('validation').textContent='';return n;}
+$('start').onclick=()=>{creation=1;say('Connection A selected. Select B as the endpoint.');sync()};
+$('end').onclick=()=>{creation=2;say('Connection B selected. Confirm the route.');sync()};
+$('confirm').onclick=()=>{route={diameter:100,offset:1.5,b:true};creation=0;selected=false;props();say('Route created. A and B connected.');sync()};
+$('selectRoute').onclick=()=>{selected=true;props();say('Pipe route selected.');sync()};
+$('saveDiameter').onclick=()=>{const n=diameter();if(n===null)return;route.diameter=n;say('Diameter committed: '+n+' mm.');sync()};
+$('edit').onclick=()=>{draft=clone(route);props();say('Editing a draft. Endpoints are locked; the slider moves only the middle segment.');sync()};
+$('offset').oninput=()=>{if(!draft)return;draft.offset=Number($('offset').value);$('offsetLabel').textContent=draft.offset.toFixed(1);sync()};
+$('diameter').oninput=()=>{$('validation').textContent='';if(draft){const n=Number($('diameter').value);if(Number.isFinite(n)&&n>0){draft.diameter=n;sync();}}};
+$('apply').onclick=()=>{const n=diameter();if(n===null)return;draft.diameter=n;if($('bug').checked&&draft.offset!==route.offset)draft.b=false;route=clone(draft);draft=null;props();say(route.b?'Edit committed. A and B remain connected.':'BUG-01 simulated: edit committed; endpoint B disconnected.');sync()};
+$('cancel').onclick=()=>{draft=null;props();say('Edit canceled. Pre-edit geometry, diameter, and connections restored.');sync()};
+$('saveDesign').onclick=()=>{try{localStorage.setItem(KEY,JSON.stringify({version:1,route}));savedAvailable=true;say('Design saved in this browser.')}catch{say('Save failed: browser storage is unavailable. Design is still open.')}sync()};
+$('closeDesign').onclick=()=>{opened=false;route=null;selected=false;props();say('Design closed. Reopen saved to inspect the stored design.');sync()};
+$('reopen').onclick=()=>{try{const data=JSON.parse(localStorage.getItem(KEY));const r=data?.route;if(data?.version!==1||!r||!Number.isFinite(r.diameter)||r.diameter<=0||!Number.isFinite(r.offset)||r.offset<0.5||r.offset>3||typeof r.b!=='boolean')throw Error();route=clone(r);opened=true;selected=false;props();say('Saved design reopened. Inspect geometry, diameter, and both endpoints.')}catch{say('Could not reopen: saved design missing or invalid. Start a new design.')}sync()};
+$('newDesign').onclick=()=>{opened=true;route=null;draft=null;creation=0;selected=false;props();say('New empty design. Previously saved copy retained.');sync()};
+$('bug').onchange=()=>say($('bug').checked?'Bug simulation enabled for the next saved middle-segment movement.':'Bug simulation off. Existing disconnected routes stay disconnected; start a new design for clean regression.');
+// Software 3D renderer: actual XYZ geometry, orbit projection, shaded cylinder meshes.
+const canvas=$('scene'),ctx=canvas.getContext('2d');let W=800,H=480,S=60;
+const sub=(a,b)=>a.map((v,i)=>v-b[i]),add=(a,b)=>a.map((v,i)=>v+b[i]),mul=(a,s)=>a.map(v=>v*s),dot=(a,b)=>a.reduce((n,v,i)=>n+v*b[i],0),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],norm=a=>mul(a,1/Math.hypot(...a));
+function camera(p){const x=p[0]*Math.cos(yaw)-p[2]*Math.sin(yaw),z=p[0]*Math.sin(yaw)+p[2]*Math.cos(yaw),y=p[1]-0.6;return[x,y*Math.cos(pitch)-z*Math.sin(pitch),y*Math.sin(pitch)+z*Math.cos(pitch)];}
+function project(p){const a=camera(p);return[W/2+a[0]*S,H*.5-a[1]*S,a[2]];}
+let faces=[];
+function cylinder(a,b,r,color,n=16){const axis=norm(sub(b,a)),u=norm(cross(axis,Math.abs(axis[1])<.9?[0,1,0]:[1,0,0])),v=cross(axis,u),ra=[],rb=[];for(let i=0;i<n;i++){const angle=i/n*Math.PI*2,off=mul(add(mul(u,Math.cos(angle)),mul(v,Math.sin(angle))),r);ra.push(add(a,off));rb.push(add(b,off));}for(let i=0;i<n;i++){let j=(i+1)%n;face([ra[i],ra[j],rb[j],rb[i]],color,add(mul(u,Math.cos((i+.5)/n*Math.PI*2)),mul(v,Math.sin((i+.5)/n*Math.PI*2))));}face(ra,color,mul(axis,-1));face(rb,color,axis);}
+function face(points,color,normal){const light=.48+.52*Math.max(0,dot(norm(normal),norm([-1,2,3])));faces.push({points:points.map(project),color:'rgb('+color.map(c=>Math.round(c*light)).join(',')+')'});}
+function line(a,b,color,width=1){a=project(a);b=project(b);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();}
+function label(p,s,color='#d2e7f3'){const q=project(p);ctx.font='600 12px system-ui';const width=ctx.measureText(s).width;ctx.fillStyle='#0b1522e8';ctx.fillRect(q[0]-width/2-7,q[1]-16,width+14,24);ctx.fillStyle=color;ctx.textAlign='center';ctx.fillText(s,q[0],q[1]);}
+function draw(){W=canvas.clientWidth;H=canvas.clientHeight;const dpr=window.devicePixelRatio||1;if(canvas.width!==Math.round(W*dpr)||canvas.height!==Math.round(H*dpr)){canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);S=Math.min(W/12,H/7)*zoom;
+if(!opened){ctx.fillStyle='#adbed0';ctx.textAlign='center';ctx.font='16px system-ui';ctx.fillText('Design closed · Reopen saved to continue',W/2,H/2);return;}
+for(let i=-6;i<=6;i++)line([i,0,-4],[i,0,4],'#203247');for(let i=-4;i<=4;i++)line([-6,0,i],[6,0,i],'#203247');faces=[];
+for(const x of [-3.8,3.8]){cylinder([x,0,0],[x,2.4,0],.8,[111,142,169],24);cylinder([x,.15,0],[x,.28,0],.86,[143,171,191],24);cylinder([x,2.05,0],[x,2.18,0],.83,[143,171,191],24);}
+const r=draft||route;if(r){const bX=r.b?3:2.55,points=[[-3,1.2,0],[-1.6,1.2,0],[-1.6,1.2,r.offset],[1.6,1.2,r.offset],[1.6,1.2,0],[bX,1.2,0]];const radius=Math.min(.28,Math.max(.035,r.diameter/2000));for(let i=1;i<points.length;i++)cylinder(points[i-1],points[i],radius,draft?[245,192,104]:[90,231,218]);}
+for(const x of [-3,3])cylinder([x-.06,1.2,0],[x+.06,1.2,0],.16,x>0&&r&&!r.b?[255,116,91]:[110,231,180]);
+faces.sort((a,b)=>a.points.reduce((n,p)=>n+p[2],0)/a.points.length-b.points.reduce((n,p)=>n+p[2],0)/b.points.length);for(const f of faces){ctx.beginPath();f.points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();ctx.fillStyle=f.color;ctx.fill();}
+label([-3.8,2.9,0],'EQUIPMENT A');label([3.8,2.9,0],'EQUIPMENT B');label([-2.85,.7,0],'A');label([3,.7,0],r&&!r.b?'B · GAP':'B',r&&!r.b?'#ff987f':'#d2e7f3');if(r)label([0,1.6,r.offset],draft?'EDIT PREVIEW':'PIPE ROUTE',draft?'#f1bf6a':'#64e1db');
+ctx.textAlign='left';ctx.font='11px system-ui';ctx.fillStyle='#9ab0c5';ctx.fillText('XYZ model · schematic equipment · diameter display capped for visibility',14,H-14);
+}
+canvas.onpointerdown=e=>{drag=[e.clientX,e.clientY];canvas.setPointerCapture(e.pointerId)};canvas.onpointermove=e=>{if(!drag)return;yaw+=(e.clientX-drag[0])*.008;pitch=Math.max(.1,Math.min(1.35,pitch+(e.clientY-drag[1])*.008));drag=[e.clientX,e.clientY];draw()};canvas.onpointerup=canvas.onpointercancel=()=>drag=null;
+canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.6,Math.min(2,zoom-e.deltaY*.001));draw()},{passive:false});
+canvas.onkeydown=e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();yaw+=e.key==='ArrowLeft'?-.1:e.key==='ArrowRight'?.1:0;pitch=Math.max(.1,Math.min(1.35,pitch+(e.key==='ArrowUp'?.1:e.key==='ArrowDown'?-.1:0)));draw()};
+$('home').onclick=()=>{yaw=-.5;pitch=.6;zoom=1;draw()};$('zoomIn').onclick=()=>{zoom=Math.min(2,zoom+.15);draw()};$('zoomOut').onclick=()=>{zoom=Math.max(.6,zoom-.15);draw()};new ResizeObserver(draw).observe(canvas);props();sync();log('Piping QA Lab v1.0 opened. No tests have been marked passed.');
+</script>
+</body></html>
